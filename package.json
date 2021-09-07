@@ -6,7 +6,7 @@
     "start": "ng serve",
     "build": "ng build",
     "build:win": "(if exist ..\\user-list-back\\front rmdir ..\\user-list-back\\front /s /q) && ng build --prod && move dist/user-list-front ..\\user-list-back\\front",
-    "build:mac": "rm -rf ../front && mkdir ../front && ng build --prod && mv dist/user-list-front/* ../front/",
+    "build:mac": "rm -rf ../front && mkdir ../front && ng build --prod && mv dist/user-list-front/* ../front/ && mkdir -p ../node_modules && cp -rn node_modules/* ../node_modules",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
