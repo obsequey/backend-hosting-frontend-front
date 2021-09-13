@@ -12,6 +12,7 @@ pipeline {
 		stage('Build frontend') {
 			steps {
 				sh 'mkdir -p backend'
+				sh 'mkdir -p backend/front'
 				sh 'npm i'
 				sh 'npm run build:prod'
 				sh 'mv dist/user-list-front/* backend/front'
