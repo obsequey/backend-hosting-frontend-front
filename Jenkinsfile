@@ -24,6 +24,7 @@ pipeline {
 				dir('backend') {
 					git(url: env.FRONT_REPO_URL, branch: env.GIT_BRANCH, credentialsId: 'github')
 					sh 'echo ${SOME_SECRET_KEY}'
+					sh 'ls'
 					sh 'docker build . -t "${REGISTRY_HOST}/${GIT_REPO_NAME}-${BRANCH_NAME}"'
 					sh 'docker push ${REGISTRY_HOST}/${GIT_REPO_NAME}-${BRANCH_NAME}'
 					sh 'docker stop ${GIT_REPO_NAME}-${BRANCH_NAME} || true'
