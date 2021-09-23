@@ -44,8 +44,7 @@ pipeline {
 
 	post {
 		always {
-			sh 'echo $JENKINS_IMAGE_PORT'
-			echo "${env.JENKINS_IMAGE_PORT}"
+			echo "${JENKINS_IMAGE_PORT}"
 		}
 	}
 }
