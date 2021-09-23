@@ -50,7 +50,7 @@ pipeline {
 					JENKINS_IMAGE_PORT=`docker port ${GIT_REPO_NAME}-${BRANCH_NAME} | egrep [0-9]+$ -o | head -1`
 					echo "localhost:$JENKINS_IMAGE_PORT"
 				'''
-	      slackSend color: "good", message: "Build for ${env.GIT_REPO_NAME} (${env.BRANCH_NAME}) is successfull: http://${env.JENKINS_SERVER}:${env.JENKINS_IMAGE_PORT}"
+	      slackSend color: "good", message: "Build for ${env.GIT_REPO_NAME} (${env.BRANCH_NAME}) is successfull: http://localhost:${JENKINS_IMAGE_PORT}"
 			}
 		}
 	}
