@@ -45,13 +45,9 @@ pipeline {
 
 	post {
 		always {
-			node('master') {
-				sh '''
-					JENKINS_IMAGE_PORT=`docker port ${GIT_REPO_NAME}-${BRANCH_NAME} | egrep [0-9]+$ -o | head -1`
-					echo "localhost:$JENKINS_IMAGE_PORT"
-				'''
-	      slackSend color: "good", message: "Build for ${env.GIT_REPO_NAME} (${env.BRANCH_NAME}) is successfull: http://localhost:${JENKINS_IMAGE_PORT}"
-			}
+			def JENKINS_IMAGE_PORT = sh script: 'docker port ${GIT_REPO_NAME}-${BRANCH_NAME} | egrep [0-9]+$ -o | head -1', returnStdout: true
+			slackSend color: "good", message: "Build for ${env.GIT_REPO_NAME} (${env.BRANCH_NAME}) is successfull: http://localhost:${JENKINS_IMAGE_PORT}"
+
 		}
 	}
 }
