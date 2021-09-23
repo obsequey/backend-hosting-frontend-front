@@ -36,6 +36,7 @@ pipeline {
 						JENKINS_IMAGE_PORT=`docker port ${GIT_REPO_NAME}-${BRANCH_NAME} | egrep [0-9]+$ -o | head -1`
 						echo "localhost:$JENKINS_IMAGE_PORT"
 					'''
+
 				}
 			}
 		}
@@ -44,7 +45,13 @@ pipeline {
 
 	post {
 		always {
-			echo "${JENKINS_IMAGE_PORT}"
+			echo "env.JENKINS_IMAGE_PORT"
+			node('master') {
+				sh '''
+					JENKINS_IMAGE_PORT=`docker port ${GIT_REPO_NAME}-${BRANCH_NAME} | egrep [0-9]+$ -o | head -1`
+					echo "localhost:$JENKINS_IMAGE_PORT"
+				'''
+			}
 		}
 	}
 }
