@@ -36,7 +36,21 @@ pipeline {
 						JENKINS_IMAGE_PORT=`docker port ${GIT_REPO_NAME}-${BRANCH_NAME} | egrep [0-9]+$ -o | head -1`
 						echo "localhost:$JENKINS_IMAGE_PORT"
 					'''
-
+		
+				}
+			}
+		}
+		
+		stage('save log build') {
+			steps {
+				script {
+					def logContent = Jenkins.getInstance()
+						.getItemByFullName(env.JOB_NAME)
+						.getBuildByNumber(
+							Integer.parseInt(env.BUILD_NUMBER))
+						.logFile.text
+					// copy the log in the job's own workspace
+					writeFile file: "buildlog.txt", text: logContent
 				}
 			}
 		}
@@ -47,15 +61,7 @@ pipeline {
 		always {
 			script {
 				def JENKINS_IMAGE_PORT = sh script: 'docker port ${GIT_REPO_NAME}-${BRANCH_NAME} | egrep [0-9]+$ -o | head -1', returnStdout: true
-				def logContent = Jenkins.getInstance()
-					.getItemByFullName(env.JOB_NAME)
-					.getBuildByNumber(
-						Integer.parseInt(env.BUILD_NUMBER))
-					.logFile.text
-				// copy the log in the job's own workspace
-				writeFile file: "buildlog.txt", text: logContent
 				slackSend color: "good", message: "Build for ${env.GIT_REPO_NAME} (${env.BRANCH_NAME}) is successfull: http://localhost:${JENKINS_IMAGE_PORT}"
-
 			}
 		}
 	}
