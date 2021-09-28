@@ -11,6 +11,7 @@ pipeline {
 	stages {
 		stage('Build frontend') {
 			steps {
+				sh 'sed -i -e "s/https://karma-runner.github.io//" karma.conf.js'
 				sh 'mkdir -p backend'
 				sh 'mkdir -p backend/front'
 				sh 'npm i'
@@ -36,11 +37,11 @@ pipeline {
 						JENKINS_IMAGE_PORT=`docker port ${GIT_REPO_NAME}-${BRANCH_NAME} | egrep [0-9]+$ -o | head -1`
 						echo "localhost:$JENKINS_IMAGE_PORT"
 					'''
-		
+
 				}
 			}
 		}
-		
+
 		stage('save log build') {
 			steps {
 				script {
