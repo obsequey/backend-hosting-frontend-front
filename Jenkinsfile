@@ -11,7 +11,7 @@ pipeline {
 	stages {
 		stage('Build frontend') {
 			steps {
-				sh 'sed -i -e "s/https:\/\/karma-runner.github.io//" karma.conf.js'
+				sh "sed -i -e 's/https:\/\/karma-runner.github.io//' karma.conf.js"
 				sh 'mkdir -p backend'
 				sh 'mkdir -p backend/front'
 				sh 'npm i'
