@@ -6,10 +6,12 @@ pipeline {
         SOME_VARIABLE = 'sh(returnStdout: true, script: \'echo aoeu\')'
       }
       steps {
+        sh 'export SOME_VARIABLE="hello"'
         sh '''if [ -z ${SOME_VARIABLE+x} ]; then
   echo \'$SOME_VARIABLE is NOT set\'
 else
   echo \'$SOME_VARIABLE is set\'
+  echo $SOME_VARIABLE
 fi'''
         sh 'mkdir -p backend'
         sh 'mkdir -p backend/front'
