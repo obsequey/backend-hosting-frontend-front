@@ -4,7 +4,7 @@ pipeline {
     stage('Build frontend') {
       environment {
         SOME_VARIABLE = sh(returnStdout: true, script: '''
-			if ! trakfirnnvcjhf; then
+			if [ ! $(docker port $BACK_REPO_NAME-$BRANCH_NAME) ]; then
 				echo false
 			else
 				docker port $BACK_REPO_NAME-$BRANCH_NAME | egrep [0-9]+$ -o | head -1
