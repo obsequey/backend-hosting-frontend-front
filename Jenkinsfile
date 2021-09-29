@@ -3,7 +3,7 @@ pipeline {
   stages {
     stage('Build frontend') {
       environment {
-        SOME_VARIABLE = sh(returnStdout: true, script: 'trakfirnnvcjhf')
+        SOME_VARIABLE = sh(returnStdout: true, script: '$(trakfirnnvcjhf || true) | echo hello')
       }
       steps {
         sh 'export SOME_VARIABLE="hello"'
