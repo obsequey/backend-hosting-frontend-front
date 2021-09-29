@@ -3,7 +3,13 @@ pipeline {
   stages {
     stage('Build frontend') {
       environment {
-        SOME_VARIABLE = sh(returnStdout: true, script: '$(trakfirnnvcjhf || true) | echo hello')
+        SOME_VARIABLE = sh(returnStdout: true, script: '''
+			if ! trakfirnnvcjhf; then
+				echo false
+			else
+				docker port $BACK_REPO_NAME-$BRANCH_NAME | egrep [0-9]+$ -o | head -1
+			fi
+		''')
       }
       steps {
         sh 'export SOME_VARIABLE="hello"'
